@@ -41,11 +41,10 @@ def telegram():
         
         if response.get('faces'):
             best = response.get('faces')[0].get('celebrity')
-        else:
-            text = '사람 아닌듯;;'
-
-        if best.get('confidence') > 0.2:
-            text = f"{best.get('confidence')*100}%만큼 {best.get('value')}를 닮으셨네요~"
+            if best.get('confidence') > 0.2:
+                text = f"{best.get('confidence')*100}%만큼 {best.get('value')}를 닮으셨네요~"
+            else:
+                text = "연예인을 닮지 않았네요...."
         else:
             text = '사람 아닌듯;;'
         api_url = f'{base_url}/sendMessage?chat_id={chat_id}&text={text}'
