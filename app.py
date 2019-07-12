@@ -38,8 +38,11 @@ def telegram():
         response = requests.post(naver_url, 
                                 headers=headers,
                                 files={'image': image}).json()
-
-        best = response.get('faces')[0].get('celebrity')
+        
+        if response.get('faces'):
+            best = response.get('faces')[0].get('celebrity')
+        else:
+            text = '사람 아닌듯;;'
 
         if best.get('confidence') > 0.2:
             text = f"{best.get('confidence')*100}%만큼 {best.get('value')}를 닮으셨네요~"
@@ -77,4 +80,4 @@ def telegram():
     return 'Ok', 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
